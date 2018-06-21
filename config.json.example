@@ -1,0 +1,8 @@
+{
+    "ethereum": {
+        "coinbaseAddress": "0x",
+        "coinbasePassword": "",
+        "connectionString": "http://localhost:8545",
+        "helloWorldAddress": "0x"
+    }
+}

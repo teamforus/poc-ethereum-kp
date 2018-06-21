@@ -26,9 +26,13 @@ module.exports = {
             to: address,
             data: method.encodeABI()
         }).then((result) => {
-            //result = web3.utils.toAscii(result);
-            result = (web3.utils.hexToAscii(result));
-            return result;
+            result = (web3.utils.hexToAscii(result)).split(/[^A-Za-z 0-9 -]/g).filter((val) => {return !!val});
+            while (result.length < 2) result.push('');
+            ret = {
+                name: result[0],
+                message: result[1]
+            }
+            return ret;
         }).catch((error) => {
             console.error('Error! '  + error);
             return error;  

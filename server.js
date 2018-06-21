@@ -8,7 +8,7 @@ helloWorldHelper.init(web3, config);
 const express = require('express');
 var app = express();
 
-app.get('/message/get', (request, response) => {
+app.get('/api/messages', (request, response) => {
     helloWorldHelper.getMessage().then((message) => {
         //console.log(message.replace(RegExp('(\\u00..)+'), ''));
         response.send({body: message}); 
@@ -20,7 +20,7 @@ app.get('/message/get', (request, response) => {
 
 app.use(express.json());
 
-app.post('/message/set', (request, response) => {
+app.post('/api/messages', (request, response) => {
     const name = request.body['name'];
     const message = request.body['message'];
     if (!!name && !!message) {
@@ -30,5 +30,5 @@ app.post('/message/set', (request, response) => {
         response.send({success: false});
     }
 });
-app.listen(3000);
-console.log('App ready at 3000');
+app.listen(80);
+console.log('App ready at 80');
