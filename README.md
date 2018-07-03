@@ -1,6 +1,6 @@
-# API Hello World service
+# API Kindpakket Ethereum service
 
-This service implements the Hello World example of Forus.io sprint 9, and will soon implement the Kindpakket functionality. 
+This service implements the Ethereum part of Kindpakket Zuidhorn. 
 
 ## Running this image on docker
 
@@ -24,22 +24,24 @@ Used to unlock the coinbase account.
 
 The string with URL and port number to connect to an Ethereum node
 
-### `helloWorldAddress` 
+### `kindpakketTokenAddress` 
 
-The address of the Hello World contract.
+The address of the Kindpakket Token contract.
 
 ## Usage
 
 This PoC uses a HTTP connection to interact.
 
-### `message/get` (GET)
+### `/v1/api/balance` (GET)
 
-Get the current message
+Get the balance of an address. Requires a JSON body with `address` key-value, based on Ethereum addresses.
 
-Expected results: JSON response with `"name"` and `"message"` values
+Expected results: JSON response with `"balance"` integer value and/or `"success"` boolean value, representing whether the call was successful or not. If the call was not successful, the `"balance"` is absent or not reliable. 
 
-### `message/set` (POST)
+### `/v1/api/transfer` (POST)
 
-Set the message. Requires a JSON body with `"name"` string and `"message"` string.
+Make a transaction. Requires a JSON body with `"from"` address string, `"to"` address string, `"amount"` integer and `"requester"` identifier.
 
-Expected results: JSON result with `"success"` with a value of `true` or `false` and an optional `"message"` response with human-readable response.
+Expected results: JSON result with `"success"` with a value of `true` or `false` if the code ran successfully and an optional `"message"` response with human-readable response.
+
+Note that `"success"` can be true, but that does not mean that the transaction in the smart contract was successful. 
