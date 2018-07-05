@@ -32,9 +32,9 @@ The address of the Kindpakket Token contract.
 
 This PoC uses a HTTP connection to interact.
 
-### GET `/v1/api/balance`
+### GET `/v1/api/balance/:token/:account`
 
-Get the balance of an address. Requires a JSON body with `address` key-value, based on Ethereum addresses.
+Get the balance of an address. `:token` refers to the address of the token, `:account` refers to the address of the user.  
 
 Expected results: JSON response with `"balance"` integer value and/or `"success"` boolean value, representing whether the call was successful or not. If the call was not successful, the `"balance"` is absent or not reliable. 
 
@@ -46,7 +46,7 @@ Expected results: JSON response with `"success"` boolean value and either an `"a
 
 ### POST `/v1/api/transfer`
 
-Make a transaction. Requires a JSON body with `"from"` address string, `"to"` address string, `"amount"` integer and `"requester"` identifier.
+Make a transaction. Requires a JSON body with `"token"` address string, `"from"` address string, `"to"` address string, `"amount"` integer and `"requester"` identifier.
 
 Expected results: JSON result with `"success"` with a value of `true` or `false` if the code ran successfully and an optional `"message"` response with human-readable response.
 
