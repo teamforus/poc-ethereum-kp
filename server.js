@@ -7,16 +7,15 @@ const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(config['ethereum']['connectionString']));
 const kindPakketHelper = require('./kindpakket-token-contract');
 kindPakketHelper.init(web3, config);
-const helloWorldHelper = require('./hello-world-contract');
-helloWorldHelper.init(web3, config);
 const express = require('express');
 var app = express();
 app.use(express.json());
 
-app.get('/v1/api/balance', (request, response) => {
-    const address = false; // TODO get from URL
-    if (!!address) {
-        kindPakketHelper.getBalance(address).then((balance) => {
+app.get('/api/v1/balance/:token/:address', (request, response) => {
+    const token = request.params.token;
+    const address = request.params.address;
+    if (!!token && !!address) {
+        kindPakketHelper.getBalance(token, address).then((balance) => {
             console.log("balance: " + balance);
             response.send({balance: balance});
         });
@@ -25,7 +24,7 @@ app.get('/v1/api/balance', (request, response) => {
     }
 });
 
-app.post('/v1/api/transfer', (request, response) => {
+app.post('/api/v1/transfer', (request, response) => {
     const to = request.body['to'];
     const from = request.body['from'];
     const amount = request.body['amount'];
@@ -42,6 +41,27 @@ app.post('/v1/api/transfer', (request, response) => {
         response.send({success: false, message: message});
     }
 });
+
+app.put('/api/v1/token', (request, response) => {
+    const owner = request.body['owner'];
+    const fundSize = request.body['fundSize'];
+    var error = null;
+    if (!owner) error = 'Missing or invalid value `owner`';
+    else if (!fundSize || fundSize <= 0) error = 'Missing or invalid value `fundSize`';
+    if (error === null) {
+        kindPakketHelper.createToken(owner, fundSize).then((address) => {
+            response.send({address: address, success: true});
+        }).catch((error) => {
+            response.send({success: false, message: error});
+        });
+    } else {
+        response.send({success: false, message: error});
+    }
+});
+
+app.put('/api/v1/user', (request, response) => {
+    response.send({address: kindPakketHelper.createKey()});
+});
+
 app.listen(PORT);
-//app.listen(80);
 console.log('App ready at ' + PORT);
