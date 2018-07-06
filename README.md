@@ -32,19 +32,19 @@ The address of the Kindpakket Token contract.
 
 This PoC uses a HTTP connection to interact.
 
-### GET `/v1/api/balance/:token/:account`
+### GET `/api/v1/balance/:token/:account`
 
 Get the balance of an address. `:token` refers to the address of the token, `:account` refers to the address of the user.  
 
 Expected results: JSON response with `"balance"` integer value and/or `"success"` boolean value, representing whether the call was successful or not. If the call was not successful, the `"balance"` is absent or not reliable. 
 
-### PUT `/v1/api/token`
+### PUT `/api/v1/token`
 
 Create a new token with a given fund size. Requires a JSON body with an `"owner"` address value and an `"fundSize"` unsigned integer.
 
 Expected results: JSON response with `"success"` boolean value and either an `"address"` address value of the new token or a `"message"` string value with the error.
 
-### POST `/v1/api/transfer`
+### POST `/api/v1/transfer`
 
 Make a transaction. Requires a JSON body with `"token"` address string, `"from"` address string, `"to"` address string, `"amount"` integer and `"requester"` identifier.
 
@@ -52,7 +52,7 @@ Expected results: JSON result with `"success"` with a value of `true` or `false`
 
 Note that `"success"` can be true, but that does not mean that the transaction in the smart contract was successful. 
 
-### PUT `/v1/api/user`
+### PUT `/api/v1/user`
 
 Create a new user.
 
