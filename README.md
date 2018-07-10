@@ -1,3 +1,7 @@
+**note:** work in progress, beware of the dragons 🐉 
+
+**This repository is maintained by:** [@martijndoornik](https://github.com/martijndoornik)
+
 # API Kindpakket Ethereum service
 
 This service implements the Ethereum part of Kindpakket Zuidhorn. 
